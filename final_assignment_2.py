@@ -15,3 +15,18 @@ def handle_missing_values(data):
     data['T4'] = data['T4'].fillna(data.groupby('Level')['T4'].transform('mean')).round(1)
     return data
     
+def calculate_descriptive_statistics(data, columns):
+    """Calculate descriptive statistics for specified columns."""
+    descriptive_statistics = {}
+    for column in columns:
+        descriptive_statistics[column] = {
+            "count": data[column].count(),
+            "mean": round(data[column].mean(), 2),
+            "std": round(data[column].std(), 2),
+            "min": round(data[column].min(), 2),
+            "25%": round(data[column].quantile(.25), 2),
+            "50%": round(data[column].median(), 2),
+            "75%": round(data[column].quantile(.75), 2),
+            "max": round(data[column].max(), 2),
+        }
+    return pd.DataFrame(descriptive_statistics).round(2)
