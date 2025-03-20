@@ -30,3 +30,14 @@ def calculate_descriptive_statistics(data, columns):
             "max": round(data[column].max(), 2),
         }
     return pd.DataFrame(descriptive_statistics).round(2)
+
+def identify_duplicates(data):
+    duplicates = data[data.duplicated()]
+    if len(duplicates) > 0:
+        print(f"Number of repeated rows: {len(duplicates)}")
+        print("Repeated rows:")
+        duplicates = data[data.duplicated(keep=False)]
+        print(duplicates)
+    else:
+        print("No repeated rows found.")
+    return duplicates
